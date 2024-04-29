@@ -1,0 +1,33 @@
+<div class="body">
+  <div class="main">
+    <div class="card">
+      <h2>Edit User</h2>
+      <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+        <input type="text" formControlName="name" placeholder="Name">
+        <div
+          *ngIf="updateUserForm?.get('name')?.invalid && (updateUserForm?.get('name')?.dirty || updateUserForm?.get('name')?.touched)">
+          <div *ngIf="updateUserForm?.get('name')?.errors?.['required']">Name is
+            required</div>
+        </div>
+
+        <input type="email" formControlName="email" placeholder="Email">
+        <div
+          *ngIf="updateUserForm?.get('email')?.invalid && (updateUserForm?.get('email')?.dirty || updateUserForm?.get('email')?.touched)">
+          <div *ngIf="updateUserForm?.get('email')?.errors?.['required']">Email is
+            required</div>
+          <div *ngIf="updateUserForm?.get('email')?.errors?.['email']">Invalid
+            email format</div>
+        </div>
+
+        <input type="text" formControlName="phone" placeholder="Phone">
+        <div
+          *ngIf="updateUserForm?.get('phone')?.invalid && (updateUserForm?.get('phone')?.dirty || updateUserForm?.get('phone')?.touched)">
+          <div *ngIf="updateUserForm?.get('phone')?.errors?.['required']">Phone is
+            required</div>
+        </div>
+
+        <button type="submit" routrLink="">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

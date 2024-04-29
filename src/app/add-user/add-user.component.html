@@ -1,0 +1,39 @@
+<div class="body">
+  <div class="main">
+    <div class="card">
+      <h2>Add User</h2>
+      <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+        <input type="text" formControlName="name" placeholder="Name">
+        <div
+          *ngIf="addUserForm?.get('name')?.invalid && (addUserForm?.get('name')?.dirty || addUserForm?.get('name')?.touched)">
+          <div *ngIf="addUserForm?.get('name')?.errors?.['required']"
+            class="error">Name is
+            required</div>
+        </div>
+
+        <input type="email" formControlName="email" placeholder="Email">
+        <div
+          *ngIf="addUserForm?.get('email')?.invalid && (addUserForm?.get('email')?.dirty || addUserForm?.get('email')?.touched)">
+          <div *ngIf="addUserForm?.get('email')?.errors?.['required']"
+            class="error">Email is
+            required</div>
+          <div *ngIf="addUserForm?.get('email')?.errors?.['email']"
+            class="error">Invalid
+            email format</div>
+        </div>
+
+        <input type="text" formControlName="phone" placeholder="Phone">
+        <div
+          *ngIf="addUserForm?.get('phone')?.invalid && (addUserForm?.get('phone')?.dirty || addUserForm?.get('phone')?.touched)">
+          <div *ngIf="addUserForm?.get('phone')?.errors?.['required']"
+            class="error">Phone is
+            required</div>
+        </div>
+
+        <!-- <button type="submit" [disabled]="!addUserForm.valid" routerLink="">Submit</button> -->
+        <button type="submit" [disabled]="!addUserForm.valid">Submit</button>
+
+      </form>
+    </div>
+  </div>
+</div>

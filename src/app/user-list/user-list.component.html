@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="header">
+      <h2>Users List</h2>
+      <a routerLink="/add">Add User</a>
+    </div>
+    <table *ngIf="users != ''" class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let user of users">
+        <tr>
+          <td>{{user._id}}</td>
+          <td>{{user.name }}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.phone}}</td>
+          <td> 
+            <a routerLink="/edit/{{user._id}}" class="btn btn-success">
+              <i class="fa-solid fa-edit"></i></a>
+            <button (click)="deleteUser(user._id)"
+              class="btn btn-danger">
+              <i class="fa-solid fa-trash"></i> </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 *ngIf="users==''" class="text-center mt-5">No Record Found in the database!</h2>
+  </div>
