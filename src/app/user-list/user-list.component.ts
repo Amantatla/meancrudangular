@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApisService } from '../Services/apis.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { error } from 'console';
 
 @Component({
   selector: 'app-user-list',
@@ -28,17 +29,18 @@ export class UserListComponent implements OnInit {
         console.error('Error fetching user data:', error);
       }
   }
+
   deleteUser(userid: any) {
-    debugger
     this.http.delete(this.api.deleteUser + userid).subscribe(
-        res => {
-            console.log("Delete request successful. Response:", res);
-            this.getAllUser();
-        },
-        error => {
-            console.error("Error occurred while deleting user:", error);
-        }
+      (res) => {
+        console.log("res:", res)
+        this.getAllUser()
+      },
+      (error) => {
+        console.log("An Error Occured", error)
+      }
     );
-}
+  }
 
 }
+

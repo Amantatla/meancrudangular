@@ -31,16 +31,18 @@ export class AddUserComponent {
     this.router.navigate(['/']);
   }
   onSubmit(): void {
+    debugger
     if (this.addUserForm?.valid) {
-      debugger
       this.http.post(this.api.addUser, this.addUserForm.value).subscribe(
         (res) => {
           console.log("User added Succesfully", res);
+          if (res) {
+            this.moveToDefaultRoute()
+          }
         },
         (error) => {
           console.error('Error adding user:', error);
         })
       }
-      this.moveToDefaultRoute()
   }
 }

@@ -5,7 +5,6 @@ import { __param } from 'tslib';
 import { ApisService } from '../Services/apis.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { error } from 'console';
 
 @Component({
   selector: 'app-edit-user',
@@ -54,19 +53,17 @@ export class EditUserComponent implements OnInit {
     );
   }
 
-
-
   onSubmit(): void {
     if (this.updateUserForm?.valid) {
       this.http.post(this.api.updateUser + this.userId, this.updateUserForm.value).subscribe((res) => {
         if (res) {
           console.log("res :", res)
+          this.moveToDefaultRoute()
         }
       },
         (error) => {
           console.log("err:", error)
         })
     }
-    this.moveToDefaultRoute()
   }
 }
