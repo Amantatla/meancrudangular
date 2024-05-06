@@ -4,6 +4,7 @@ import { ApisService } from '../Services/apis.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { error } from 'console';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-list',
@@ -15,10 +16,17 @@ import { error } from 'console';
 export class UserListComponent implements OnInit {
   users: any = [];
 
-  constructor(private http: HttpClient, private api: ApisService) { }
+  constructor(private http: HttpClient, private api: ApisService, private toast:ToastrService) { }
 
   ngOnInit(): void {
     this.getAllUser();
+  }
+
+  showToaster(message:any, title:any){
+    this.toast.success(message, title)
+  }
+  showError(message:any, title:any){
+    this.toast.error(message, title)
   }
 
   getAllUser() {
@@ -32,15 +40,15 @@ export class UserListComponent implements OnInit {
 
   deleteUser(userid: any) {
     this.http.delete(this.api.deleteUser + userid).subscribe(
-      (res) => {
+      (res:any) => {
         console.log("res:", res)
+          this.showToaster(res.message, res.title);
         this.getAllUser()
       },
-      (error) => {
-        console.log("An Error Occured", error)
+      (error:any) => {
+        this.showError("An Error Occured", error.status);
       }
     );
   }
-
 }
 

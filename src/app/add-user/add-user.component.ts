@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ApisService } from '../Services/apis.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-user',
@@ -18,7 +19,8 @@ export class AddUserComponent {
   constructor(private formBuilder: FormBuilder,
     private api: ApisService,
     private http: HttpClient,
-    private router: Router) { }
+    private router: Router,
+    private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.addUserForm = this.formBuilder.group({
@@ -27,6 +29,12 @@ export class AddUserComponent {
       phone: ['', Validators.required]
     });
   }
+  showToaster(message: any, title: any) {
+    this.toast.success(message, title)
+  }
+  showError(message: any, title: any) {
+    this.toast.error(message, title)
+  }
   moveToDefaultRoute() {
     this.router.navigate(['/']);
   }
@@ -34,15 +42,16 @@ export class AddUserComponent {
     debugger
     if (this.addUserForm?.valid) {
       this.http.post(this.api.addUser, this.addUserForm.value).subscribe(
-        (res) => {
+        (res: any) => {
           console.log("User added Succesfully", res);
           if (res) {
+            this.showToaster(res.message, res.title);
             this.moveToDefaultRoute()
           }
         },
-        (error) => {
-          console.error('Error adding user:', error);
+        (error:any) => {
+          this.showError("An Error Occured", error.status);
         })
-      }
+    }
   }
 }

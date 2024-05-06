@@ -9,12 +9,11 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
+
 export class AppComponent implements OnInit {
   title = 'pinterest';
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
-
+  ngOnInit(): void {}
 }
+
+

@@ -5,6 +5,7 @@ import { __param } from 'tslib';
 import { ApisService } from '../Services/apis.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +22,8 @@ export class EditUserComponent implements OnInit {
     private api: ApisService,
     private http: HttpClient,
     private activeroute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private toast:ToastrService) { }
 
   ngOnInit(): void {
     this.updateUserForm = this.formBuilder.group({
@@ -34,6 +36,14 @@ export class EditUserComponent implements OnInit {
     this.findUser(this.userId)
 
   }
+
+  showToaster(message: any, title: any) {
+    this.toast.success(message, title)
+  }
+  showError(message:any, title:any){
+    this.toast.error(message, title)
+  }
+  
   moveToDefaultRoute() {
     this.router.navigate(['/']);
   }
@@ -55,15 +65,15 @@ export class EditUserComponent implements OnInit {
 
   onSubmit(): void {
     if (this.updateUserForm?.valid) {
-      this.http.post(this.api.updateUser + this.userId, this.updateUserForm.value).subscribe((res) => {
+      this.http.post(this.api.updateUser + this.userId, this.updateUserForm.value).subscribe((res:any) => {
         if (res) {
-          console.log("res :", res)
+          this.showToaster(res.message, res.type);
           this.moveToDefaultRoute()
         }
       },
-        (error) => {
-          console.log("err:", error)
-        })
+      (error:any) => {
+        this.showError("An Error Occured", error.status);
+      })
     }
   }
 }
