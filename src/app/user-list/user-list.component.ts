@@ -16,16 +16,16 @@ import { ToastrService } from 'ngx-toastr';
 export class UserListComponent implements OnInit {
   users: any = [];
 
-  constructor(private http: HttpClient, private api: ApisService, private toast:ToastrService) { }
+  constructor(private http: HttpClient, private api: ApisService, private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.getAllUser();
   }
 
-  showToaster(message:any, title:any){
+  showToaster(message: any, title: any) {
     this.toast.success(message, title)
   }
-  showError(message:any, title:any){
+  showError(message: any, title: any) {
     this.toast.error(message, title)
   }
 
@@ -40,13 +40,15 @@ export class UserListComponent implements OnInit {
 
   deleteUser(userid: any) {
     this.http.delete(this.api.deleteUser + userid).subscribe(
-      (res:any) => {
+      (res: any) => {
         console.log("res:", res)
-          this.showToaster(res.message, res.title);
+        this.toast.success(res.message, res.title)
         this.getAllUser()
       },
-      (error:any) => {
-        this.showError("An Error Occured", error.status);
+      (error: any) => {
+        this.toast.error("An Error Occured", error.title)
+
+
       }
     );
   }

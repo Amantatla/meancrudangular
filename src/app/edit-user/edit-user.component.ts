@@ -36,14 +36,6 @@ export class EditUserComponent implements OnInit {
     this.findUser(this.userId)
 
   }
-
-  showToaster(message: any, title: any) {
-    this.toast.success(message, title)
-  }
-  showError(message:any, title:any){
-    this.toast.error(message, title)
-  }
-  
   moveToDefaultRoute() {
     this.router.navigate(['/']);
   }
@@ -67,12 +59,12 @@ export class EditUserComponent implements OnInit {
     if (this.updateUserForm?.valid) {
       this.http.post(this.api.updateUser + this.userId, this.updateUserForm.value).subscribe((res:any) => {
         if (res) {
-          this.showToaster(res.message, res.type);
+          this.toast.success(res.message)
           this.moveToDefaultRoute()
         }
       },
       (error:any) => {
-        this.showError("An Error Occured", error.status);
+        this.toast.error("An Error Occured", error.status)
       })
     }
   }

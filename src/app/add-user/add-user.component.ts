@@ -29,12 +29,7 @@ export class AddUserComponent {
       phone: ['', Validators.required]
     });
   }
-  showToaster(message: any, title: any) {
-    this.toast.success(message, title)
-  }
-  showError(message: any, title: any) {
-    this.toast.error(message, title)
-  }
+
   moveToDefaultRoute() {
     this.router.navigate(['/']);
   }
@@ -45,12 +40,12 @@ export class AddUserComponent {
         (res: any) => {
           console.log("User added Succesfully", res);
           if (res) {
-            this.showToaster(res.message, res.title);
+            this.toast.success(res.message, res.title)
             this.moveToDefaultRoute()
           }
         },
-        (error:any) => {
-          this.showError("An Error Occured", error.status);
+        (error: any) => {
+          this.toast.error("An Error Occured", error.status)
         })
     }
   }
